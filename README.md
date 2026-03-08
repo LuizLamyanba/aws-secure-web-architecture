@@ -60,7 +60,7 @@ The backend web server is **never directly exposed to the internet**. Instead, a
 - ALB access logging
 
 ---
-### 8. IAM Role for Secure Instance Management
+##  IAM Role for Secure Instance Management
 
 To securely manage the EC2 instance without exposing SSH access, an IAM role was attached to the instance enabling **AWS Systems Manager (SSM)** access.
 
@@ -81,7 +81,7 @@ The trust policy allows the EC2 service to assume the role.
 
 ![ssm-role](<snippets/ssm role.png>)
 
-Detailed IAM configuration and policy files are documented in the **** of this repository.
+Detailed IAM configuration and policy files are documented in the **[IAM-CONFIG readme](docs/iam-configuration.md)** of this repository.
 
 ## Deployment Walkthrough
 
@@ -100,7 +100,7 @@ https://websecureapp.luizcloud.com
 
 ### 2. VPC & Network Architecture
 
-A custom VPC was provisioned with the following structure:
+A custom VPC was provisioned with the following structure:[Network-architecture readme](docs/network-architecture.md)
 
 - **2 public subnets** — for the Application Load Balancer
 - **1 private subnet** — for the EC2 instance (no direct internet access)
@@ -141,7 +141,7 @@ This design ensures the backend server is **fully isolated from inbound internet
 
 ### 5. AWS WAF Configuration
 
-WAF was configured with the following AWS Managed Rule Groups:
+WAF was configured with the following AWS Managed Rule Groups: **[WAF-config readme](docs/waf-configuration.md)**
 
 - **Core Rule Set** — common web exploits (OWASP Top 10)
 - **SQL Injection Protection** — blocks SQLi patterns in requests
@@ -214,6 +214,23 @@ HTTP 403 Forbidden
 
 The WAF SQL injection rule set detected and blocked the request before it reached the origin.
 
+### WAF Monitoring Dashboard
+
+AWS WAF metrics confirm that malicious requests are detected and blocked before reaching the application.
+
+The dashboard shows:
+
+• blocked SQL injection attempts  
+• allowed legitimate requests  
+• request origin locations  
+• rule trigger statistics
+
+![waf-dashboard](<snippets/waf dashboard.png>)
+
+![waf-metrics](<snippets/waf metrics.png>)
+
+![waf-table](<snippets/waf table.png>)
+
 ---
 
 ### Bot Detection — Blocked by WAF
@@ -278,20 +295,20 @@ This project provided hands-on experience with:
 
 **Amazon CloudFront Integration**
 
-Adding a CDN layer would provide edge-level security, DDoS mitigation via AWS Shield, and improved global latency.
+ - Adding a CDN layer would provide edge-level security, DDoS mitigation via AWS Shield, and improved global latency.
 
 **Infrastructure as Code**
 
-Automate provisioning and ensure reproducibility using:
-- Terraform
-- AWS CloudFormation
+ -Automate provisioning and ensure reproducibility using:
+     - Terraform
+     - AWS CloudFormation
 
 **Extended Security Monitoring**
 
-Integrate additional AWS security services:
-- **AWS GuardDuty** — threat detection
-- **AWS Security Hub** — centralized security posture management
-- **AWS CloudTrail** — API audit logging
+ -Integrate additional AWS security services:
+     - **AWS GuardDuty** — threat detection
+     - **AWS Security Hub** — centralized security posture management
+     - **AWS CloudTrail** — API audit logging
 
 **Log Analysis with Amazon Athena**
 
