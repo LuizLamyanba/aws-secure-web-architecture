@@ -106,10 +106,12 @@ This design ensures the backend server is **fully isolated from inbound internet
 
 - HTTPS listener on **port 443**
 - TLS certificate provisioned and managed by **AWS Certificate Manager**
+
 ![tls-cert](<snippets/tls certificate.png>)
 
 - HTTP traffic on port 80 automatically redirected to HTTPS
 - Target group routes traffic to the EC2 instance
+
 ![alb](snippets/secure-alb.png)
 
 
@@ -123,6 +125,7 @@ WAF was configured with the following AWS Managed Rule Groups:
 - **SQL Injection Protection** — blocks SQLi patterns in requests
 - **Known Bad Inputs** — filters known malicious payloads
 - **Bot Control** — detects and blocks automated/non-browser traffic
+
 ![waf-config](<snippets/waf config.png>)
 
 ---
@@ -145,7 +148,9 @@ add_header Referrer-Policy "no-referrer" always;
 | `X-Content-Type-Options` | MIME-type sniffing |
 | `Referrer-Policy` | Referrer information leakage |
 
+
 ![nginx-conf](snippets/nginx-conf.png)
+
 snippet of nginx conf inside ssm
 
 ---
@@ -161,6 +166,8 @@ Each log entry includes:
 - HTTP response status code
 - Timestamp
 - User-agent string
+
+
 ![elb-s3](snippets/elb-s3.png)
 
 This provides a full audit trail for traffic analysis and security investigations.
