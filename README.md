@@ -60,6 +60,28 @@ The backend web server is **never directly exposed to the internet**. Instead, a
 - ALB access logging
 
 ---
+### 8. IAM Role for Secure Instance Management
+
+To securely manage the EC2 instance without exposing SSH access, an IAM role was attached to the instance enabling **AWS Systems Manager (SSM)** access.
+
+This allows administrators to connect to the instance through the AWS console without opening port 22.
+
+**Key Security Benefits**
+
+- No SSH keys required
+- No inbound SSH port exposure
+- Access controlled via AWS IAM policies
+- Session activity can be logged and audited
+
+The instance role includes the following AWS managed policy:
+
+- `AmazonSSMManagedInstanceCore`
+
+The trust policy allows the EC2 service to assume the role.
+
+![ssm-role](<snippets/ssm role.png>)
+
+Detailed IAM configuration and policy files are documented in the **** of this repository.
 
 ## Deployment Walkthrough
 
@@ -204,6 +226,21 @@ Automated requests sent via `curl` were blocked by the **AWS WAF Bot Control** r
 ### HTTPS Validation
 
 TLS certificate verified via browser inspection — issued and managed through **AWS Certificate Manager** with no certificate warnings.
+
+### SSH Access Restriction — Port 22 Disabled
+
+Direct SSH access to the EC2 instance is intentionally disabled to reduce the attack surface.
+Instead of allowing inbound SSH (port 22), the instance is accessed securely using **AWS Systems Manager Session Manager (SSM)**.
+
+**Security Configuration**
+
+- No inbound rule for port **22 (SSH)** in the EC2 security group
+- Instance deployed in a **private subnet**
+- Administrative access performed through **AWS Systems Manager**
+
+![ec2port22](snippets/port22.png)
+
+Attempting to connect to the instance via SSH results in a connection failure.
 
 ---
 
