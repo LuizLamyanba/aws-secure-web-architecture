@@ -72,6 +72,7 @@ The backend web server is **never directly exposed to the internet**. Instead, a
 ```
 https://websecureapp.luizcloud.com
 ```
+![user-interface-of-web-secure-app](<snippets/ui of web.png>)
 
 ---
 
