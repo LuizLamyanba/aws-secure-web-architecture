@@ -22,6 +22,7 @@ The backend web server is **never directly exposed to the internet**. Instead, a
 
 ## Architecture
 ![Architecture_diagram](architecture/architecure.png)
+[Architecture readme](architecture/Architecture.md)
 
 ### Design Decisions
 
