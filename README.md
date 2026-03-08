@@ -95,6 +95,9 @@ This design ensures the backend server is **fully isolated from inbound internet
 
 - Amazon Linux instance deployed inside the private subnet
 - **Nginx** installed and configured as the web server
+
+![ec2ssm](<snippets/ec2 ssm.png>)
+
 - Instance accessed securely via **AWS Systems Manager (SSM)** — no SSH key or bastion host required
 
 ---
@@ -103,8 +106,12 @@ This design ensures the backend server is **fully isolated from inbound internet
 
 - HTTPS listener on **port 443**
 - TLS certificate provisioned and managed by **AWS Certificate Manager**
+![tls-cert](<snippets/tls certificate.png>)
+
 - HTTP traffic on port 80 automatically redirected to HTTPS
 - Target group routes traffic to the EC2 instance
+![alb](snippets/secure-alb.png)
+
 
 ---
 
@@ -116,6 +123,7 @@ WAF was configured with the following AWS Managed Rule Groups:
 - **SQL Injection Protection** — blocks SQLi patterns in requests
 - **Known Bad Inputs** — filters known malicious payloads
 - **Bot Control** — detects and blocks automated/non-browser traffic
+![waf-config](<snippets/waf config.png>)
 
 ---
 
@@ -137,6 +145,9 @@ add_header Referrer-Policy "no-referrer" always;
 | `X-Content-Type-Options` | MIME-type sniffing |
 | `Referrer-Policy` | Referrer information leakage |
 
+![nginx-conf](snippets/nginx-conf.png)
+snippet of nginx conf inside ssm
+
 ---
 
 ### 7. Logging
@@ -150,6 +161,7 @@ Each log entry includes:
 - HTTP response status code
 - Timestamp
 - User-agent string
+![elb-s3](snippets/elb-s3.png)
 
 This provides a full audit trail for traffic analysis and security investigations.
 
@@ -167,7 +179,9 @@ GET https://websecureapp.luizcloud.com/?id=1' OR '1'='1
 **Response:**
 ```
 HTTP 403 Forbidden
+
 ```
+![403error](snippets/403.png)
 
 The WAF SQL injection rule set detected and blocked the request before it reached the origin.
 
@@ -176,6 +190,7 @@ The WAF SQL injection rule set detected and blocked the request before it reache
 ### Bot Detection — Blocked by WAF
 
 Automated requests sent via `curl` were blocked by the **AWS WAF Bot Control** rule group, confirming that non-browser traffic is correctly identified and rejected.
+![CURL-TEST](snippets/curel-test.png)
 
 ---
 
