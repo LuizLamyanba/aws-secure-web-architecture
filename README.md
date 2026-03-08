@@ -87,6 +87,7 @@ A custom VPC was provisioned with the following structure:
 - **Route tables** — configured per subnet to enforce network flow
 
 This design ensures the backend server is **fully isolated from inbound internet traffic**.
+![network](<snippets/network mapping.png>)
 
 ---
 
