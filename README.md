@@ -299,7 +299,7 @@ This project provided hands-on experience with:
 
 **Infrastructure as Code**
 
-  -Automate provisioning and ensure reproducibility using:
+  - Automate provisioning and ensure reproducibility using:
      - Terraform
      - AWS CloudFormation
 
