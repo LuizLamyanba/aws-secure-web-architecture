@@ -299,13 +299,13 @@ This project provided hands-on experience with:
 
 **Infrastructure as Code**
 
- -Automate provisioning and ensure reproducibility using:
+  -Automate provisioning and ensure reproducibility using:
      - Terraform
      - AWS CloudFormation
 
 **Extended Security Monitoring**
 
- -Integrate additional AWS security services:
+ - Integrate additional AWS security services:
      - **AWS GuardDuty** — threat detection
      - **AWS Security Hub** — centralized security posture management
      - **AWS CloudTrail** — API audit logging
